@@ -16,10 +16,13 @@ public class Student {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-
     private String name;
     private Integer age;
     private Integer year;
+
+    public Student(){
+
+    }
 
     public Student(int id, String name, int age, int year) {
         this.id = id;

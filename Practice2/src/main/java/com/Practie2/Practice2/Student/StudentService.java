@@ -15,6 +15,7 @@ public class StudentService {
     private StudentReposistory studentReposistory;
 
     public StudentService(StudentReposistory studentRepository) {
+
         this.studentReposistory = studentRepository;
     }
 

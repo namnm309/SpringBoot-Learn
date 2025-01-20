@@ -4,6 +4,7 @@ package com.Practie2.Practice2.Student;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,7 @@ public class StudentController {
 //    public StudentController(StudentService studentService) {
 //        this.studentService = studentService;
 //    }
+
 //Ko sử dụng Autowired
 //    public StudentController(StudentService studentService) {
 //        this.studentService = studentService;
@@ -33,8 +35,18 @@ public class StudentController {
 
     @GetMapping("/getStudent")
     public List<Student> getStudent(){
-       return studentService.getStudent();
+
+        return studentService.getStudent();
     }
+//
+//    //Tao phuong thuc search
+//    @PostMapping("/addStudent")
+//    public void addStudent(){
+//
+//    }
+
+//    //Lay bang khach hang
+//    @GetMapping("/getCustomertable")
 
 
 
