@@ -1,7 +1,7 @@
-package com.example.demo.repository;
+package com.example.DemoSelftest2.repository;
 
 
-import com.example.demo.model.User;
+import com.example.DemoSelftest2.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

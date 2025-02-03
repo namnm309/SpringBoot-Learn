@@ -1,13 +1,13 @@
-package com.example.demo.controller;
+package com.example.DemoSelftest2.controller;
 
 
-import com.example.demo.dto.LoginUserDto;
-import com.example.demo.dto.RegisterUserDto;
-import com.example.demo.dto.VerifyUserDto;
-import com.example.demo.model.User;
-import com.example.demo.responses.LoginResponse;
-import com.example.demo.service.AuthenticationService;
-import com.example.demo.service.JwtService;
+import com.example.DemoSelftest2.dto.LoginUserDto;
+import com.example.DemoSelftest2.dto.RegisterUserDto;
+import com.example.DemoSelftest2.dto.VerifyUserDto;
+import com.example.DemoSelftest2.model.User;
+import com.example.DemoSelftest2.responses.LoginResponse;
+import com.example.DemoSelftest2.service.AuthenticationService;
+import com.example.DemoSelftest2.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

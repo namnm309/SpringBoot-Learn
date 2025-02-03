@@ -15,7 +15,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity//kich hoat spring security
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -28,15 +28,21 @@ public class SecurityConfiguration {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    //chặn lại để authen = security
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())//CSRF protection (bảo vệ chống lại tấn công CSRF)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs*/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")      // Chỉ ROLE_ADMIN được truy cập
+                        .requestMatchers("/api/staff/**").hasAnyRole("ADMIN", "STAFF") // ROLE_ADMIN và ROLE_STAFF được truy cập
+                        .requestMatchers("/api/customer/**").hasAnyRole("ADMIN", "STAFF", "CUSTOMER")
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session
+                .sessionManagement(session -> session//Session management (quản lý phiên)
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)
@@ -44,6 +50,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

@@ -1,14 +1,11 @@
-package com.Practie2.Practice2.Student;
+package com.Practie2.Practice2.Student.model;
 
 
 
 import jakarta.persistence.*;
-import lombok.*;
 
-import java.time.LocalDate;
-
-@Entity
-@Table (name = "Student")
+@Entity//ánh xạ class Student với bảng Student trong database
+@Table (name = "Student")//Ánh xạ class này với bảng có tên Student
 //@Getter
 //@Setter
 public class Student {

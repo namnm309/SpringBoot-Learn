@@ -1,7 +1,7 @@
-package com.example.demo.config;
+package com.example.DemoSelftest2.config;
 
 
-import com.example.demo.repository.UserRepository;
+import com.example.DemoSelftest2.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

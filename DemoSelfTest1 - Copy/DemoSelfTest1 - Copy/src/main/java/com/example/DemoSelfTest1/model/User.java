@@ -53,7 +53,7 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getEmail() {   // ❌ Không được Override vì UserDetails không có phương thức này
+    public String getEmail() {   //  Không được Override vì UserDetails không có phương thức này
         return email;
     }
 

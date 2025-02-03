@@ -1,4 +1,4 @@
-package com.example.Authentication.security.config;
+package com.example.Authentication.security;
 
 public class PasswordEncoder {
 }

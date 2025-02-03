@@ -1,6 +1,6 @@
-package com.example.demo.config;
+package com.example.DemoSelftest2.config;
 
-import com.example.demo.service.JwtService;
+import com.example.DemoSelftest2.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

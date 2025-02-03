@@ -1,6 +1,5 @@
 package com.Practie2.Practice2;
 
-import com.Practie2.Practice2.Student.Student;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

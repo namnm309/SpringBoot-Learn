@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.DemoSelftest2.service;
 
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.DemoSelftest2.model.User;
+import com.example.DemoSelftest2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

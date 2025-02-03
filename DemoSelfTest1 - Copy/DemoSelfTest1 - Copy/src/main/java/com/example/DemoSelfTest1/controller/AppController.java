@@ -2,6 +2,8 @@ package com.example.DemoSelfTest1.controller;
 
 import com.example.DemoSelfTest1.model.Student;
 import com.example.DemoSelfTest1.service.AppService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController//báo rằng đây là tầng controller = @Controller + @Respone
 @RequestMapping("/customer")
+@Tag(name="Các api chức năng app")
 public class AppController {
 
     @Autowired
@@ -18,6 +21,7 @@ public class AppController {
     public String test="succesful";
 
 
+    @Operation(summary = "Lấy thông tin học sinh",description = "Cần parameter id từ fe để nhận đc ")
     //URL tới get Student
     @GetMapping("/Student")
     public List<String> getStudent(){

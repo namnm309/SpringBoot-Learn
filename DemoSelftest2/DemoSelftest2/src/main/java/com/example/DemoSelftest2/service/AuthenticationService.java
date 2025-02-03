@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package com.example.DemoSelftest2.service;
 
-import com.example.demo.dto.LoginUserDto;
-import com.example.demo.dto.RegisterUserDto;
-import com.example.demo.dto.VerifyUserDto;
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.DemoSelftest2.dto.LoginUserDto;
+import com.example.DemoSelftest2.dto.RegisterUserDto;
+import com.example.DemoSelftest2.dto.VerifyUserDto;
+import com.example.DemoSelftest2.model.User;
+import com.example.DemoSelftest2.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

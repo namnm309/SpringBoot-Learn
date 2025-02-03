@@ -1,15 +1,13 @@
-package com.Practie2.Practice2.Student;
+package com.Practie2.Practice2.Student.controller;
 //API Layer
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.Practie2.Practice2.Student.model.Student;
+import com.Practie2.Practice2.Student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @RestController//Anotation này dùng để cho các endpoint khác chạy , nói caách khác cho class này là restful api

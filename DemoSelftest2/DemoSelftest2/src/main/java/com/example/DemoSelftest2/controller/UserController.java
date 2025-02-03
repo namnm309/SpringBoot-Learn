@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.DemoSelftest2.controller;
 
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import com.example.DemoSelftest2.model.User;
+import com.example.DemoSelftest2.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
