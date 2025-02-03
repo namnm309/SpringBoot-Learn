@@ -18,14 +18,21 @@ public class StudentService {
     private StudentReposistory studentReposistory;
 
     public StudentService(StudentReposistory studentRepository) {
+
         this.studentReposistory = studentRepository;
     }
 
+    //Lấy thông tin sinh viên
     public List<Student> getStudent(){
 //        Student st = new Student(10,"mnam", 20,2024);
 //        return List.of(st);
 
         List<Student>  ans= studentReposistory.findAll();
         return ans;
+    }
+
+    // Thêm sinh viên mới
+    public Student addStudent(Student student) {
+        return studentReposistory.save(student);
     }
 }
