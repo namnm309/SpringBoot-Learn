@@ -1,20 +1,13 @@
-package com.Practie2.Practice2;
+package com.nofear.nac;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * tác dụng chỉ là chạy project
- */
 @SpringBootApplication
-public class Practice2Application {
+public class NacApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Practice2Application.class, args);
-
-
+		SpringApplication.run(NacApplication.class, args);
 	}
-
-
 
 }
