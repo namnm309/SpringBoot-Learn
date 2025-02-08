@@ -17,6 +17,7 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="demo (1)" />
         <module name="demoWithSpreingWebAndLomBookDependencies" />
         <module name="Practice2" />
       </profile>
@@ -26,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Practice2" options="-parameters" />
       <module name="demo" options="-parameters" />
+      <module name="demo (1)" options="-parameters" />
       <module name="demoNoDependencies" options="-parameters" />
       <module name="demoWithSpreingWebAndLomBookDependencies" options="-parameters" />
     </option>

@@ -37,9 +37,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs*/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")      // Chỉ ROLE_ADMIN được truy cập
-                        .requestMatchers("/api/staff/**").hasAnyRole("ADMIN", "STAFF") // ROLE_ADMIN và ROLE_STAFF được truy cập
-                        .requestMatchers("/api/customer/**").hasAnyRole("ADMIN", "STAFF", "CUSTOMER")
+//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")      // Chỉ ROLE_ADMIN được truy cập
+//                        .requestMatchers("/api/staff/**").hasAnyRole("ADMIN", "STAFF") // ROLE_ADMIN và ROLE_STAFF được truy cập
+//                        .requestMatchers("/api/customer/**").hasAnyRole("ADMIN", "STAFF", "CUSTOMER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session//Session management (quản lý phiên)

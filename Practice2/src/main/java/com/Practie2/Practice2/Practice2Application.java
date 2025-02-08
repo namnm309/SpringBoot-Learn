@@ -3,7 +3,9 @@ package com.Practie2.Practice2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//Just run
+/**
+ * tác dụng chỉ là chạy project
+ */
 @SpringBootApplication
 public class Practice2Application {
 

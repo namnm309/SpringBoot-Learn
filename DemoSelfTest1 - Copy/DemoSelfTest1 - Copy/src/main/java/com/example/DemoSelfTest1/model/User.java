@@ -34,16 +34,8 @@ public class User implements UserDetails {
     @Column(name = "verification_expiration")
     private LocalDateTime verificationCodeExpiresAt;
 
+    @Column(name="enabled")
     private boolean enabled;
-
-    public User(String username, String email, String password, String verificationCode, LocalDateTime verificationCodeExpiresAt, boolean enabled) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.verificationCode = verificationCode;
-        this.verificationCodeExpiresAt = verificationCodeExpiresAt;
-        this.enabled = enabled;
-    }
 
     public User() {
     }
@@ -52,6 +44,15 @@ public class User implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String email, String password, String verificationCode, LocalDateTime verificationCodeExpiresAt, boolean enabled) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.verificationCode = verificationCode;
+        this.verificationCodeExpiresAt = verificationCodeExpiresAt;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -70,7 +71,7 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getEmail() {   //  Không được Override vì UserDetails không có phương thức này
+    public String getEmail() {
         return email;
     }
 
@@ -103,19 +104,15 @@ public class User implements UserDetails {
     }
 
 
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
-    //TODO: add proper boolean checks
     @Override
     public boolean isAccountNonExpired() {
         return true;

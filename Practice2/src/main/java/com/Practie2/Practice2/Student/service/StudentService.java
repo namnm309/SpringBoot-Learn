@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Map dữ liệu trong db
+ */
 @Service //Giúp Spring nhận biết đc beans này trong constructor tạo bên controller
 public class StudentService {
 
