@@ -19,6 +19,7 @@ public class User {
 //    @Enumerated(EnumType.STRING)
 //    private EncryptionAlgorithm algorithm;
 
+    //Quan he voi bang authority de lay ra phan quyen cua user
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authority", // Join table name

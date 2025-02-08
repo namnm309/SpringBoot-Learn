@@ -14,6 +14,7 @@ public class Authority {
     @Column(unique=true)
     private String authority;
 
+    //Moi quan he nhieu nhieu voi table user
     @ManyToMany(mappedBy = "authorities")
     private List<User> users;
 

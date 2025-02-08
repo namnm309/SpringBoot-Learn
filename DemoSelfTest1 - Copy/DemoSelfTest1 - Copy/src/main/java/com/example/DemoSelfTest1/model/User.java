@@ -18,18 +18,35 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String username;
+
     @Column(unique = true, nullable = false)
     private String email;
+
     @Column(nullable = false)
     private String password;
 
     @Column(name = "verification_code")
     private String verificationCode;
+
     @Column(name = "verification_expiration")
     private LocalDateTime verificationCodeExpiresAt;
+
     private boolean enabled;
+
+    public User(String username, String email, String password, String verificationCode, LocalDateTime verificationCodeExpiresAt, boolean enabled) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.verificationCode = verificationCode;
+        this.verificationCodeExpiresAt = verificationCodeExpiresAt;
+        this.enabled = enabled;
+    }
+
+    public User() {
+    }
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -91,17 +108,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public User(String username, String email, String password, String verificationCode, LocalDateTime verificationCodeExpiresAt, boolean enabled) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.verificationCode = verificationCode;
-        this.verificationCodeExpiresAt = verificationCodeExpiresAt;
-        this.enabled = enabled;
-    }
 
-    public User() {
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

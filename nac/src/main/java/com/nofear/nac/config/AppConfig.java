@@ -24,26 +24,32 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableMethodSecurity
 public class AppConfig {
-
+    //List url can authorization
     private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
-                                                    "/api/v1/healthcheck"};
+                                                    "/api/v1/healthcheck",
+                                                    "/swagger-ui/**",
+                                                    "/v3/api-docs*/**"};
 
+    //method AuthenticationProvider
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+    //Tao object su dung method token
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    //method log out
     @Autowired
     private LogoutHandler logoutHandler;
 
+    //chot filter chan request lai de check
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable);
+        http.csrf(AbstractHttpConfigurer::disable);//tinh nang advanced crsf
         http.authorizeHttpRequests(req ->
                          req.requestMatchers(WHITE_LIST_URL)
-                            .permitAll()
+                            .permitAll()//cap quyen truy cap tat ca
                             .anyRequest()
                             .authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

@@ -8,14 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+//Class nay cung cap thong tin user
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
+    //inject
     public UserDetailsImpl(User user) {
         this.user = user;
     }
 
+    //methof GrandtedAuthority cua Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getAuthorities().stream()

@@ -17,9 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationProviderServiceImpl implements AuthenticationProvider {
 
+    //Tao object de lay thong tin cua user
     @Autowired
     private UserDetailsService userDetailsService;
 
+    //Ma hoa mat khau
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -40,6 +42,7 @@ public class AuthenticationProviderServiceImpl implements AuthenticationProvider
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
     }
 
+    //Tao phuong thuc check mat khau
     private Authentication checkPassword(UserDetails user, String rawPassword, PasswordEncoder encoder) {
         System.out.println("----------- Check Pass : " + rawPassword + ":" +user.getPassword() );
         if (encoder.matches(rawPassword, user.getPassword())) {

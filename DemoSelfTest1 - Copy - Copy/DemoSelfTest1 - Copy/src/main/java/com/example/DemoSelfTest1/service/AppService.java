@@ -34,7 +34,7 @@ public class AppService {
                     System.out.println("Đã cập nhật thành công");
                     return appRepository.save(student);
                 })
-                .orElseThrow(() -> new RuntimeException("Student not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Ko co hoc sinh phu hop voi ID : " + id));
     }
 
     // Function xóa học sinh

@@ -13,18 +13,21 @@ import java.util.function.Supplier;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
+    //Tao object de lay thong tu repository
     @Autowired
     private UserRepository userRepository;
+
 
     @Override
     public UserDetailsImpl loadUserByUsername(String username) {
 
         System.out.println("---------------------- Calling UserDetailsImpl::loadUserByUsername ----------------------");
 
+        //Tao exception tao loi
         Supplier<UsernameNotFoundException> s =
                 () -> new UsernameNotFoundException("UserDetailsImpl::loadUserByUsername - Problem during authentication!");
 
-        User user = userRepository.findUserByUsername(username).orElseThrow(s);
+        User user = userRepository.findUserByUsername(username).orElseThrow(s);//Neu ko co user se nhay ra loi
 
         return new UserDetailsImpl(user);
     }

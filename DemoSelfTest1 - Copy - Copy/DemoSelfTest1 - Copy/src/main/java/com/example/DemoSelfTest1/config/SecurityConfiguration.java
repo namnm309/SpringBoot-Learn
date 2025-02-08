@@ -19,6 +19,8 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity //mo @PreAuthorize tren controller
 public class SecurityConfiguration {
+    private static final String [] LIST_URL ={"/auth/**" +
+                                                "/swagger-ui/**"};
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -35,6 +37,7 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(LIST_URL).permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs*/**").permitAll()
