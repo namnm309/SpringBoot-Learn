@@ -4,7 +4,9 @@ public enum ErrorCode {
     USER_EXISTED(1001,"User đã tồn tại"),//Define 1 mã errorcode,
     UNCATEGORIZED_EXCEPTION(9999,"Lỗi không xác định"),
     PASSWORD_INVALID(1003,"Mật khẩu phải ít nhất 8 kí tự "),
-    INVALIDID_KEY(1002,"Lỗi sai mã định danh lỗi . Hãy lưu lại và báo với BackEnd , Xin cảm ơn .")
+    INVALIDID_KEY(1002,"Lỗi sai mã định danh lỗi . Hãy lưu lại và báo với BackEnd , Xin cảm ơn ."),
+    USER_NOT_EXISTED(1006,"Tài khoản không tồn tại . Xin vui lòng thử lại !!!"),
+    UNAUTHENTICATED(1007,"Tài khoản ko hợp lệ !")
     ;
 
     private int code;

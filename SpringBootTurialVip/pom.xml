@@ -44,16 +44,34 @@
 <!--		</dependency>-->
 
 		<!--		Dependency dùng cho Spring Security	-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
+		<!--Lưu ý : khi bật lên mà chưa config thì sẽ ko truy cập all api -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
-		<!--		Dependency dùng cho Spring Web	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+<!--			<scope>test</scope>-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--		Dependency dùng cho Spring Web	-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-web</artifactId>-->
+<!--		</dependency>-->
 
 		<!--		Dependency xử lí validation khi user nhập -->
 		<dependency>
@@ -70,11 +88,18 @@
 		</dependency>
 
 		<!--		Dependency dùng cho Lombook (Tool)	-->
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
+
 
 		<!-- 	Dependency dùng cho Spring Test	-->
 		<dependency>
@@ -82,13 +107,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Dependency dùng cho Spring Security	-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security</groupId>-->
-<!--			<artifactId>spring-security-test</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
 
 		<!-- Dependency MapStruct -->
 		<dependency>
@@ -104,6 +122,23 @@
 			<version>1.5.5.Final</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Dependency dành cho thuật toán mã hóa mật khẩu Crypto -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+
+		<!--Dependency tạo token-->
+		<!--Đã có trong spring-boot-starter-oauth2-resource-server , nn ko cần khai báo -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.31</version>  <!-- Kiểm tra xem có bản mới hơn không -->
+		</dependency>
+
+
+
 
 	</dependencies>
 

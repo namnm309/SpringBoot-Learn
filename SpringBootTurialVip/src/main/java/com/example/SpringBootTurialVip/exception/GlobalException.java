@@ -34,15 +34,15 @@ public class GlobalException {
 //    }
 
 //Nếu chưa define lỗi trong errorcode method này sẽ nhảy ra thông báo lỗi ko xác định
-    @ExceptionHandler(value= Exception.class)
-    ResponseEntity<ApiResponse> handlingRuntimeExcpetion(RuntimeException exception){//Spring sẽ auto inject exception vào exception
-        ApiResponse apiResponse=new ApiResponse();
-
-        apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
-        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
-
-        return ResponseEntity.badRequest().body(apiResponse);
-    }
+//    @ExceptionHandler(value= Exception.class)
+//    ResponseEntity<ApiResponse> handlingRuntimeExcpetion(RuntimeException exception){//Spring sẽ auto inject exception vào exception
+//        ApiResponse apiResponse=new ApiResponse();
+//
+//        apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
+//        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+//
+//        return ResponseEntity.badRequest().body(apiResponse);
+//    }
 
     //Xử lí lỗi trong quá trình truy vấn
     @ExceptionHandler(value= AppException.class)

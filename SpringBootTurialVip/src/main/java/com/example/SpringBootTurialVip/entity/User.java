@@ -1,10 +1,10 @@
 package com.example.SpringBootTurialVip.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity//Đánh dấu đây là 1 table để map lên từ database
 @Table(name="tbl_users")
@@ -50,6 +50,11 @@ public class User {
 
     @Column(name="verification_expiration")
     private  LocalTime verfication_expiration;
+
+    //1 user có nhiều roles
+
+    //private Set<String> roles;//Trong 1 set chỉ có unique item
+
 
     public User() {
     }
@@ -179,6 +184,15 @@ public class User {
         this.verification_expired = verification_expired;
     }
 
+    //Roles
+//    public Set<String> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<String> roles) {
+//        this.roles = roles;
+//    }
+
     public LocalTime getVerfication_expiration() {
         return verfication_expiration;
     }
@@ -186,4 +200,7 @@ public class User {
     public void setVerfication_expiration(LocalTime verfication_expiration) {
         this.verfication_expiration = verfication_expiration;
     }
+
+
+
 }

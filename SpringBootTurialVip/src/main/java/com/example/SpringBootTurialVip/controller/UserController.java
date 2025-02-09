@@ -46,6 +46,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
+//    @GetMapping("/username/{username}")
+//    Optional<User> getUserName(@PathVariable("username") String username){
+//        return userService.getUserName(username);
+//    }
+
     //API update thông tin user
 //        @PutMapping("/{userId}")//update dựa trên ID
 //        User updateUser(@PathVariable String userId ,@RequestBody UserUpdateRequest updateRequest){//Tạo 1 object request mới

@@ -9,11 +9,12 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Set;
 
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//@Builder
+@Builder
 //@FieldDefaults(level= AccessLevel.PRIVATE)
 public class UserResponse {
     @Id//Định nghĩa cho ID
@@ -30,6 +31,7 @@ public class UserResponse {
     @Column(name="fullname")
      private String fullname;
 
+    //Trong thực tế ko trả về password
     @Column(name="password")
      private String password;
 
@@ -48,10 +50,21 @@ public class UserResponse {
     @Column(name="enabled")
     private boolean enabled;
 
+    //Roles
+    private Set<String> roles;
+
     public UserResponse() {
     }
 
-    public UserResponse(Long parentid, String username, String fullname, String password, String email, String phone, Date bod, String gender, boolean enabled) {
+    public UserResponse(Long parentid
+            , String username
+            , String fullname
+            , String password
+            , String email
+            , String phone
+            , Date bod
+            , String gender
+            , boolean enabled) {
         this.parentid = parentid;
         this.username = username;
         this.fullname = fullname;
