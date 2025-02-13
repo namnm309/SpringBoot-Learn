@@ -22,7 +22,7 @@ import java.util.List;
 public class PermissionController {
     PermissionService permissionService;
 
-    @PostMapping
+    @PostMapping("/create")
     ApiResponse<PermissionResponse> create(@RequestBody
                                            @Valid //tuân thủ request
                                            PermissionRequest request) {
@@ -31,14 +31,14 @@ public class PermissionController {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     ApiResponse<List<PermissionResponse>> getAll() {
         return ApiResponse.<List<PermissionResponse>>builder()
                 .result(permissionService.getAll())
                 .build();
     }
 
-    @DeleteMapping("/{permission}")
+    @DeleteMapping("/delete/{permission}")
     ApiResponse<Void> delete(@PathVariable String permission) {
         permissionService.delete(permission);
         return ApiResponse.<Void>builder().build();

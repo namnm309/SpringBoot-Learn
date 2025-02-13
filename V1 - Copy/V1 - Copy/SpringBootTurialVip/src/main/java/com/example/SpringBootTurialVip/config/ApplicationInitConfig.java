@@ -1,5 +1,6 @@
 package com.example.SpringBootTurialVip.config;
 
+import java.util.Date;
 import java.util.HashSet;
 
 import com.example.SpringBootTurialVip.constant.PredefinedRole;
@@ -7,6 +8,7 @@ import com.example.SpringBootTurialVip.entity.Role;
 import com.example.SpringBootTurialVip.entity.User;
 import com.example.SpringBootTurialVip.repository.RoleRepository;
 import com.example.SpringBootTurialVip.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -36,10 +38,10 @@ public class ApplicationInitConfig {
     static final String ADMIN_PASSWORD = "admin";
 
     @Bean
-    @ConditionalOnProperty(
-            prefix = "spring",
-            value = "datasource.driverClassName",
-            havingValue = "com.mysql.cj.jdbc.Driver")
+//    @ConditionalOnProperty(
+//            prefix = "spring",
+//            value = "datasource.driverClassName",
+//            havingValue = "org.postgresql.Driver")
     ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
         log.info("Initializing application.....");
         return args -> {
@@ -60,6 +62,10 @@ public class ApplicationInitConfig {
                 User user = User.builder()
                         .username(ADMIN_USER_NAME)
                         .password(passwordEncoder.encode(ADMIN_PASSWORD))
+                        .email("<EMAIL>")
+                          .phone("0123456789")
+                          .bod(new Date())
+                          .gender("Unknown")
                         .roles(roles)
                         .build();
 

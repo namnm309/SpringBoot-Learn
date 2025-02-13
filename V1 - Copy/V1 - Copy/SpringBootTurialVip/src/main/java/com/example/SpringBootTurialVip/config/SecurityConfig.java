@@ -31,9 +31,9 @@ public class SecurityConfig {
     private String signerKey;
 
     //Tạo biến để cho phép các endpoint
-    private final String [] PUBLIC_ENDPOINT={"auth/loginToken"
-            ,"auth/verifyToken"
-            ,"users/createUser"};
+    private final String [] PUBLIC_ENDPOINT={"/auth/loginToken"
+            ,"/auth/verifyToken"
+            ,"/users/createUser"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -72,7 +72,8 @@ public class SecurityConfig {
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+//        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);

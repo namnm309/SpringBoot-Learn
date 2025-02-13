@@ -1,5 +1,6 @@
 package com.example.SpringBootTurialVip.service;
 
+
 import com.example.SpringBootTurialVip.constant.PredefinedRole;
 import com.example.SpringBootTurialVip.dto.request.UserCreationRequest;
 import com.example.SpringBootTurialVip.dto.request.UserUpdateRequest;
@@ -35,8 +36,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     //Tạo tài khoản
@@ -157,13 +160,26 @@ public class UserService {
     }
 
     //Cập nhật user
-    public UserResponse updateUser(String userId ,UserUpdateRequest request){
-    User user=userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found!"));
+//    public UserResponse updateUser(String userId ,UserUpdateRequest request){
+//    User user=userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found!"));
+//
+//    userMapper.updateUser(user,request);
+//
+//    return userMapper.toUserResponse(userRepository.save(user));
+//}
 
-    userMapper.updateUser(user,request);
+    @PostAuthorize("returnObject.username == authentication.name")
+    public UserResponse updateUser(String userId, UserUpdateRequest request) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-    return userMapper.toUserResponse(userRepository.save(user));
-}
+        userMapper.updateUser(user, request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
+
+        return userMapper.toUserResponse(userRepository.save(user));
+    }
 
     //Xóa user
     public void deleteUser(String userId){

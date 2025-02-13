@@ -53,7 +53,7 @@ public class UserResponse {
 
     //Roles
 //    private Set<String> roles;
-    private Set<Role> roles;
+    private Set<RoleResponse> roles;
 
 
 //    public UserResponse() {

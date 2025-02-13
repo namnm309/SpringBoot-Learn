@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="tbl_role")
+@Table(name="tbl_roles")
 @Entity
 public class Role {
     @Id

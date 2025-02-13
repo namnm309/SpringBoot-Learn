@@ -16,6 +16,7 @@ public interface UserMapper {
     //=> Có thể @Autowired vào service để sử dụng , VD bên UserService
 
     //Map data từ request dạng UserUpdateRequest vào user
+    @Mapping(target = "roles",ignore = true)
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 
     //@Mapping(source = "username",target = "fullname")//map từ source vào target
