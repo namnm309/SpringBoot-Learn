@@ -1,7 +1,10 @@
 package com.example.SpringBootTurialVip.dto.response;
 
 import com.example.SpringBootTurialVip.entity.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -50,7 +53,6 @@ public class UserResponse {
 
     //Roles
 //    private Set<String> roles;
-    @ManyToMany
     private Set<RoleResponse> roles;
 
 

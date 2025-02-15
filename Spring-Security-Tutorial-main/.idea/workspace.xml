@@ -5,102 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a833450-925e-460f-8e1b-6756021972be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../DemoSelfTest1/src/main/java/com/example/DemoSelfTest1/controller/AppController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelfTest1/src/main/java/com/example/DemoSelfTest1/model/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelfTest1/src/main/java/com/example/DemoSelfTest1/repository/AppRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelfTest1/src/main/java/com/example/DemoSelfTest1/service/AppService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/DemoSelftest2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/config/ApplicationConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/config/SecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/controller/AuthenticationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/dto/LoginUserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/dto/RegisterUserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/dto/VerifyUserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/responses/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/service/AuthenticationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/service/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSelfProject/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSelfProject/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSelfProject/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../demoSelfProject/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppuserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/AppuserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/appUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/AppUser/appUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/RegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/RegistrationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/RegistrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/RegistrationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/UserRegistrationCotroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/registration/UserRegistrationCotroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/security/PasswordEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/security/PasswordEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/security/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Authentication/Authentication/src/main/java/com/example/Authentication/security/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DemoSpringBoot/src/main/java/com/example/DemoSpringBoot/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DemoSpringBoot/src/main/java/com/example/DemoSpringBoot/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/hello.html" beforeDir="false" afterPath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/hello.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../DemoSpringBoot/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Practice2Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Practice2Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/controller/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/model/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/repository/StudentReposistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/repository/StudentReposistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Practice2/src/main/java/com/Practie2/Practice2/Student/service/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/DemoApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/config/ApplicationConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/config/EmailConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/config/JwtAuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/config/SecurityConfiguration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/controller/AuthenticationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/dto/LoginUserDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/dto/RegisterUserDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/dto/VerifyUserDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/repository/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/responses/LoginResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/service/AuthenticationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/service/EmailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/service/JwtService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/classes/java/main/com/example/demo/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/resources/main/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/tmp/compileJava/compileTransaction/stash-dir/AuthenticationController.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/tmp/compileJava/compileTransaction/stash-dir/AuthenticationService.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/config/ApplicationConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/config/EmailConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DemoSelftest2/DemoSelftest2/src/main/java/com/example/DemoSelftest2/config/EmailConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/config/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/config/SecurityConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/controller/AuthenticationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/dto/LoginUserDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/dto/RegisterUserDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/dto/VerifyUserDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/responses/LoginResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/service/AuthenticationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/service/EmailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/service/JwtService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/java/com/example/demo/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/demo/src/test/java/com/example/demo/DemoApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginDemo/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,9 +42,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "dev1be__mNam__V1.1",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ngoc Lan/OneDrive/Máy tính/Github/SpringBoot/Spring-Security-Tutorial-main",
+    "last_opened_file_path": "C:/Users/Ngoc Lan/OneDrive/Máy tính/Github/SpringBoot/DemoSelfTest1V1",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
