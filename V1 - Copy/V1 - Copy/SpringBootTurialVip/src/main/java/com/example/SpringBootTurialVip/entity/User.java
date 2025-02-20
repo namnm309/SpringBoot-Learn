@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
@@ -53,11 +54,11 @@ public class User {
     @Column(name="verification_cod")
     private String verification_code;
 
-    @Column(name="verification_expired")
-    private LocalTime verification_expired;
+    @Column(name="verification_expired_at")
+    private LocalDateTime verification_expired_at;
 
-    @Column(name="verification_expiration")
-    private  LocalTime verfication_expiration;
+//    @Column(name="verification_expiration")
+//    private  LocalTime verfication_expiration;
 
     //1 user có nhiều roles
 

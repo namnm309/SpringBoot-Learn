@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a833450-925e-460f-8e1b-6756021972be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/config/EmailConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/dto/request/VerifyAccountRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/service/EmailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring-Security-Tutorial-main/demo/src/main/java/com/example/demo/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring-Security-Tutorial-main/demo/src/main/java/com/example/demo/service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/config/ApplicationInitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/config/ApplicationInitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/java/com/example/SpringBootTurialVip/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../V1 - Copy/V1 - Copy/SpringBootTurialVip/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +39,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "namnm309"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/namnm309/SpringBoot.git",
+    "accountId": "2775c95d-e9fc-4031-a18b-e5e70c03fc6b"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -42,9 +64,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "dev1be__mNam__V1.1",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ngoc Lan/OneDrive/Máy tính/Github/SpringBoot/DemoSelfTest1V1",
+    "last_opened_file_path": "E:/Github/SpringBoot/Spring-Security-Tutorial-main",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"

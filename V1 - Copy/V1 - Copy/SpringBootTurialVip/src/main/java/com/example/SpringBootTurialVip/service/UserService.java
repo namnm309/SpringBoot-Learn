@@ -4,6 +4,7 @@ package com.example.SpringBootTurialVip.service;
 import com.example.SpringBootTurialVip.constant.PredefinedRole;
 import com.example.SpringBootTurialVip.dto.request.UserCreationRequest;
 import com.example.SpringBootTurialVip.dto.request.UserUpdateRequest;
+import com.example.SpringBootTurialVip.dto.request.VerifyAccountRequest;
 import com.example.SpringBootTurialVip.dto.response.UserResponse;
 import com.example.SpringBootTurialVip.entity.Role;
 import com.example.SpringBootTurialVip.entity.User;
@@ -12,6 +13,7 @@ import com.example.SpringBootTurialVip.exception.ErrorCode;
 import com.example.SpringBootTurialVip.mapper.UserMapper;
 import com.example.SpringBootTurialVip.repository.RoleRepository;
 import com.example.SpringBootTurialVip.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,9 +24,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Slf4j
 @Service//Layer này sẽ gọi xuống layer repository
@@ -41,6 +45,9 @@ public class UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmailService emailService;
 
     //Tạo tài khoản
     public User createUser(UserCreationRequest request){
@@ -99,6 +106,10 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user.setVerification_code(generateVerificationCode());
+        user.setVerification_expired_at(LocalDateTime.now().plusMinutes(15));
+        user.setEnabled(false);
+        sendVerificationEmail(user);
 
         try {
             user = userRepository.save(user);
@@ -109,6 +120,74 @@ public class UserService {
         return userRepository.save(user);
 
     }
+
+    //Hàm xác thực người dùng
+    public void verifyUser(VerifyAccountRequest input) {
+        Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getVerification_expired_at().isBefore(LocalDateTime.now())) {
+                throw new RuntimeException("Verification code has expired");
+            }
+            if (user.getVerification_code().equals(input.getVerificationcode())) {
+                user.setEnabled(true);
+                user.setVerification_code(null);
+                user.setVerification_expired_at(null);
+                userRepository.save(user);
+            } else {
+                throw new RuntimeException("Invalid verification code");
+            }
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    //Hàm gửi lại xác thực cho người dùng
+    public void resendVerificationCode(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.isEnabled()) {
+                throw new RuntimeException("Account is already verified");
+            }
+            user.setVerification_code(generateVerificationCode());
+            user.setVerification_expired_at(LocalDateTime.now().plusHours(1));
+            sendVerificationEmail(user);
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    private void sendVerificationEmail(User user) { //TODO: Update with company logo
+        String subject = "Account Verification";
+        String verificationCode = "VERIFICATION CODE " + user.getVerification_code();
+        String htmlMessage = "<html>"
+                + "<body style=\"font-family: Arial, sans-serif;\">"
+                + "<div style=\"background-color: #f5f5f5; padding: 20px;\">"
+                + "<h2 style=\"color: #333;\">Welcome to our app!</h2>"
+                + "<p style=\"font-size: 16px;\">Please enter the verification code below to continue:</p>"
+                + "<div style=\"background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1);\">"
+                + "<h3 style=\"color: #333;\">Verification Code:</h3>"
+                + "<p style=\"font-size: 18px; font-weight: bold; color: #007bff;\">" + verificationCode + "</p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
+
+        try {
+            emailService.sendVerificationEmail(user.getEmail(), subject, htmlMessage);
+        } catch (MessagingException e) {
+            // Handle email sending exception
+            e.printStackTrace();
+        }
+    }
+    private String generateVerificationCode() {
+        Random random = new Random();
+        int code = random.nextInt(900000) + 100000;
+        return String.valueOf(code);
+    }
+
 
     //Danh sách user
     @PreAuthorize("hasRole('ADMIN')")//Chỉ cho phép admin

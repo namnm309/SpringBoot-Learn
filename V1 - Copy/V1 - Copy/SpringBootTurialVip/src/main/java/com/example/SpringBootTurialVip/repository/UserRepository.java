@@ -12,5 +12,10 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     //JPA sẽ tự động generate query check sự tôn tại field Username với cái param cta truyền vào
     boolean existsByUsername (String username);
+
     Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
+
+    //Optional<User> findByVerificationCode(String verificationCode);
 }

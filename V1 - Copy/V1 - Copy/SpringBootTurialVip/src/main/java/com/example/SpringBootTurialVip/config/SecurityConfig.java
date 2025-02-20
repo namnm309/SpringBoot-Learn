@@ -33,7 +33,9 @@ public class SecurityConfig {
     //Tạo biến để cho phép các endpoint
     private final String [] PUBLIC_ENDPOINT={"/auth/loginToken"
             ,"/auth/verifyToken"
-            ,"/users/createUser"};
+            ,"/users/createUser"
+    ,"/users/resend"
+            ,"/users/verify"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
