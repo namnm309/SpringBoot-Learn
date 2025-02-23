@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 //Class này tương tác với JPA , DBMS
-public interface UserRepository extends JpaRepository<User,String> {
+public interface UserRepository extends JpaRepository<User,Long> {
 
     //JPA sẽ tự động generate query check sự tôn tại field Username với cái param cta truyền vào
     boolean existsByUsername (String username);
@@ -35,8 +35,7 @@ public interface UserRepository extends JpaRepository<User,String> {
     // Lấy tất cả `Parent` (User có parent_id = NULL)
     List<User> findByParentidIsNull();
 
-    // Lấy tất cả User có Role cụ thể
-//    List<User> findByRoles_RoleName(String roleName);
+
 
 
 

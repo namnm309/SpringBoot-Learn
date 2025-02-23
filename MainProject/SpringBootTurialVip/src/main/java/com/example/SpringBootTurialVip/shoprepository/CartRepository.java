@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CartRepository extends JpaRepository<Cart, Integer> {
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
-	public Cart findByProductIdAndUserId(Integer productId, Integer userId);
+	public Cart findByProductIdAndUserId(Long productId, Long userId);
 
-	public Integer countByUserId(Integer userId);
+	public Long countByUserId(Long userId);
 
-	public List<Cart> findByUserId(Integer userId);
+	public List<Cart> findByUserId(Long userId);
 
 }

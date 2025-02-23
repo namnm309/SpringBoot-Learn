@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class StaffController {
     * @ModelAttribute :Tự động ánh xạ dữ liệu từ form vào một đối tượng (Model)
     * @RequestParam	:Lấy dữ liệu từ query string hoặc form input (dạng key-value)
     * @RequestBody	:Đọc dữ liệu từ request body (thường dùng cho API với JSON/XML)
+    * ObjectUtils giúp tránh các giá trị null
     */
 
     private final StaffService staffService;
@@ -98,7 +100,7 @@ public class StaffController {
 
             Product savedProduct = productService.addProduct(product);
 
-            if (!ObjectUtils.isEmpty(savedProduct)) {
+            if (!ObjectUtils.isEmpty(savedProduct)) {//N
                 File saveFile = new ClassPathResource("/static/img/").getFile();
                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
                         + image.getOriginalFilename());
@@ -154,16 +156,131 @@ public class StaffController {
     }
 
     //API Xóa sản phẩm
-    //API tìm sản phẩm theo tên(title)
+    @DeleteMapping("/deleteProduct/{productId}")
+    String deleteUser(@PathVariable("productId") Long productId){
+        productService.deleteProduct(productId);
+        return "Đã delete product ";
+    }
 
     //API tạo Category
+    @PostMapping("/createCategory")
+    public ResponseEntity<?> saveCategory(@ModelAttribute Category category,
+                                          @RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
+        try {
+            // Xử lý tên ảnh (nếu không có, dùng mặc định)
+            String imageName = (file != null && !file.isEmpty()) ? file.getOriginalFilename() : "default.jpg";
+            category.setImageName(imageName);
+
+            // Kiểm tra nếu danh mục đã tồn tại
+            if (categoryService.existCategory(category.getName())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Collections.singletonMap("error", "Category Name already exists"));
+            }
+
+            // Lưu category vào DB
+            Category savedCategory = categoryService.saveCategory(category);
+
+            if (!ObjectUtils.isEmpty(savedCategory)) {
+                // Lưu file ảnh nếu có
+                if (file != null && !file.isEmpty()) {
+                    File saveFile = new ClassPathResource("static/img/").getFile();
+                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "category_img" + File.separator
+                            + file.getOriginalFilename());
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                }
+                return ResponseEntity.ok(Collections.singletonMap("message", "Category saved successfully"));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonMap("error", "Not saved! Internal server error"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }
+
     //API lấy tất cả category
-    //API Update(Edit) Category
-    //API Xóa Category
+    @GetMapping("/showCategory")
+    public ResponseEntity<ApiResponse<List<Category>>> loadAddProduct() {
+        List<Category> categories = categoryService.getAllCategory();
+        ApiResponse<List<Category>> response = new ApiResponse<>(1000, "Fetched categories successfully", categories);
+        return ResponseEntity.ok(response);
+    }
+
+    //API lấy tất cả category đang hoạt động
+
+    @GetMapping("/showActiveCategory")
+    public ResponseEntity<ApiResponse<List<Category>>> showActiveCategory() {
+        List<Category> categories = categoryService.getAllActiveCategory();
+        ApiResponse<List<Category>> response = new ApiResponse<>(1000, "Fetched categories successfully", categories);
+        return ResponseEntity.ok(response);
+    }
+
+    //API Update(Edit) Category = ID
+    @PutMapping("/updateCategory/{id}")
+    public ResponseEntity<ApiResponse<Category>> updateCategory(
+            @PathVariable Integer id,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "isActive") Boolean isActive,
+            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+
+        // Tìm Category theo ID
+        Category oldCategory = categoryService.getCategoryById(id);
+        if (oldCategory == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(1004, "Category not found", null));
+        }
+
+        // Cập nhật thông tin category
+        String imageName = (file != null && !file.isEmpty()) ? file.getOriginalFilename() : oldCategory.getImageName();
+        oldCategory.setName(name);
+        oldCategory.setIsActive(isActive);
+        oldCategory.setImageName(imageName);
+
+        // Lưu category
+        Category updatedCategory = categoryService.saveCategory(oldCategory);
+
+        // Lưu file ảnh nếu có upload mới
+        if (file != null && !file.isEmpty()) {
+            File saveFile = new ClassPathResource("static/img").getFile();
+            Path path = Paths.get(saveFile.getAbsolutePath(), "category_img", file.getOriginalFilename());
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Category updated successfully", updatedCategory));
+    }
+
+    //API Xóa Category = ID
+    @DeleteMapping("/deleteCategory/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteCategory(@PathVariable int id) {
+        Boolean isDeleted = categoryService.deleteCategory(id);
+
+        if (isDeleted) {
+            return ResponseEntity.ok(new ApiResponse<>(1000, "Category deleted successfully", null));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(1004, "Failed to delete category", null));
+        }
+    }
+
     //API tìm Category theo tên
+    @GetMapping("/searchCategory")
+    public ResponseEntity<ApiResponse<List<Category>>> searchCategory(@RequestParam String name) {
+        List<Category> categories = categoryService.findByNameContaining(name);
+
+        if (categories.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(1004, "No categories found", null));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Categories found", categories));
+    }
 
     //API cho xem order
+
+
     //API Update trạng thái order
+
     //APi tìm order theo id
 
 

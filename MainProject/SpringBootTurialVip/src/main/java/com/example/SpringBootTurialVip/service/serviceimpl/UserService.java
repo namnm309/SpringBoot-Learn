@@ -178,7 +178,7 @@ public class UserService {
     @PostAuthorize("hasRole('ADMIN') || returnObject.username == authentication.name")//Post sẽ run method trc r check sau
     //Như khai báo thì chỉ cho phép truy cập nếu id kiếm trùng id đang login
     //Kiếm user băằng ID
-    public UserResponse getUserById(String id){
+    public UserResponse getUserById(Long id){
         return userMapper.toUserResponse(userRepository.findById(id).
                 orElseThrow(()->new RuntimeException("User not found!")));//Nếu ko tìm thấy báo lỗi
     }
@@ -201,7 +201,7 @@ public class UserService {
 
     //Cập nhật thông tin
     @PostAuthorize("returnObject.username == authentication.name")
-    public UserResponse updateUser(String userId, UserUpdateRequest request) {
+    public UserResponse updateUser(Long userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, request);
@@ -214,7 +214,7 @@ public class UserService {
     }
 
     //Xóa user
-    public void deleteUser(String userId){
+    public void deleteUser(Long userId){
         userRepository.deleteById(userId);
     }
 

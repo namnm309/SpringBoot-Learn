@@ -5,6 +5,7 @@ import com.example.SpringBootTurialVip.shopentity.Product;
 import com.example.SpringBootTurialVip.shoprepository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean deleteProduct(Integer id) {
+    public Boolean deleteProduct(Long id) {
         Product product = productRepository.findById(id).orElse(null);
 
         if (!ObjectUtils.isEmpty(product)) {
@@ -45,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer id) {
+    public Product getProductById(Long id) {
         Product product = productRepository.findById(id).orElse(null);
         return product;
     }
@@ -117,6 +118,25 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(name, name);
     }
 
+    @Override
+    public Page<Product> getAllActiveProductPagination(Integer pageNo, Integer pageSize, String category) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> searchProductPagination(Integer pageNo, Integer pageSize, String ch) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> getAllProductsPagination(Integer pageNo, Integer pageSize) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> searchActiveProductPagination(Integer pageNo, Integer pageSize, String category, String ch) {
+        return null;
+    }
 
 
 }

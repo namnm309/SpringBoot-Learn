@@ -4,14 +4,23 @@ import com.example.SpringBootTurialVip.dto.request.*;
 import com.example.SpringBootTurialVip.dto.response.ChildResponse;
 import com.example.SpringBootTurialVip.dto.response.UserResponse;
 import com.example.SpringBootTurialVip.entity.User;
+import com.example.SpringBootTurialVip.service.CartService;
+import com.example.SpringBootTurialVip.service.OrderService;
 import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
+import com.example.SpringBootTurialVip.shopentity.Cart;
+import com.example.SpringBootTurialVip.shopentity.OrderRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +30,12 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private OrderService orderService;
 
     //API tạo user
     @PostMapping("/createUser")
@@ -90,7 +105,7 @@ public class UserController {
 //        }
 
     @GetMapping("/{userId}")//Nhận 1 param id để tìm thông tin user đó
-    UserResponse getUser(@PathVariable("userId") String userId){
+    UserResponse getUser(@PathVariable("userId") Long userId){
         return userService.getUserById(userId);
     }
 
@@ -105,13 +120,13 @@ public class UserController {
 //            return userService.updateUser(userId,updateRequest);
 //        }
     @PutMapping("/{userId}")//update dựa trên ID
-    UserResponse updateUser(@PathVariable String userId ,@RequestBody UserUpdateRequest updateRequest){//Tạo 1 object request mới
+    UserResponse updateUser(@PathVariable Long userId ,@RequestBody UserUpdateRequest updateRequest){//Tạo 1 object request mới
         return userService.updateUser(userId,updateRequest);
     }
 
     //API xóa thông tin user
     @DeleteMapping("/delete/{userId}")
-    String deleteUser(@PathVariable("userId") String userID){
+    String deleteUser(@PathVariable("userId") Long userID){
         userService.deleteUser(userID);
         return "Đã delete user và danh sách sau khi delete là : ";
     }
@@ -146,5 +161,65 @@ public class UserController {
     public ResponseEntity<List<ChildResponse>> updateMyChildren(@RequestBody ChildCreationRequest request) {
         return ResponseEntity.ok(userService.updateChildrenByParent(request));
     }
+
+    //API order vaccine
+
+    private UserResponse getLoggedInUserDetails() {
+
+        UserResponse user = userService.getMyInfo();
+        return user;
+    }
+
+    //API xem cart khách hàng đã thêm vài  dựa theo token truy ra thông tin cá nhân
+    @GetMapping("/orders")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getOrderPage() {
+        UserResponse user = getLoggedInUserDetails();
+        List<Cart> carts = cartService.getCartsByUser(user.getId());
+
+        // Chuẩn bị dữ liệu phản hồi
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("carts", carts);
+
+        if (!carts.isEmpty()) {
+            Double orderPrice = carts.get(carts.size() - 1).getTotalOrderPrice();
+            Double totalOrderPrice = orderPrice + 250 + 100;
+            responseData.put("orderPrice", orderPrice);
+            responseData.put("totalOrderPrice", totalOrderPrice);
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Order details fetched successfully", responseData));
+    }
+
+
+    //API tạo order dựa trên token truy ra thông tin cá nhân để lưu vào
+    @PostMapping("/saveOrder")
+    public ResponseEntity<ApiResponse<String>> saveOrder(@RequestBody OrderRequest request) {
+        try {
+            // Lấy thông tin user đang đăng nhập
+            UserResponse user = userService.getMyInfo();
+            orderService.saveOrder(user.getId(), request);
+
+            // Trả về phản hồi JSON chuẩn RESTful
+            return ResponseEntity.ok(new ApiResponse<>(1000, "Order saved successfully", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(1004, "Failed to save order: " + e.getMessage(), null));
+        }
+    }
+
+    //API : Cart
+    @GetMapping("/addCart")
+    public ResponseEntity<ApiResponse<Cart>> addToCart(@RequestParam Long pid, @RequestParam Long uid) {
+        Cart savedCart = cartService.saveCart(pid, uid);
+
+        if (ObjectUtils.isEmpty(savedCart)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(1004, "Product add to cart failed", null));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Product added to cart", savedCart));
+    }
+
+
 
 }
