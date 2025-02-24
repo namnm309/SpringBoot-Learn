@@ -21,12 +21,5 @@ public class OrderDetail {
 
 	private String mobileNo;
 
-	private String address;
-
-	private String city;
-
-	private String state;
-
-	private String pincode;
 
 }

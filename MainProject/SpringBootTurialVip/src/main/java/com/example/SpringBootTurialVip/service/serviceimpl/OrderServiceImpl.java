@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -30,40 +31,45 @@ public class OrderServiceImpl implements OrderService {
     private CartRepository cartRepository;
 
     @Override
-    public void saveOrder(Long userid, OrderRequest orderRequest) throws Exception {
+    public void saveOrder(Long cartId, OrderRequest orderRequest) throws Exception {
+        // Tìm giỏ hàng theo cartId
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new NoSuchElementException("Cart với ID " + cartId + " không tồn tại"));
 
-        List<Cart> carts = cartRepository.findByUserId(userid);
+        // Tạo đơn hàng từ giỏ hàng
+        ProductOrder order = new ProductOrder();
+        order.setOrderId(UUID.randomUUID().toString());
+        order.setOrderDate(LocalDate.now());
 
-        for (Cart cart : carts) {
+        order.setProduct(cart.getProduct());
+        order.setPrice(cart.getProduct().getDiscountPrice());
+        order.setQuantity(cart.getQuantity());
+        order.setUser(cart.getUser());
 
-            ProductOrder order = new ProductOrder();
+        order.setStatus(OrderStatus.IN_PROGRESS.getName());
+        order.setPaymentType(orderRequest.getPaymentType());
 
-            order.setOrderId(UUID.randomUUID().toString());
-            order.setOrderDate(LocalDate.now());
-
-            order.setProduct(cart.getProduct());
-            order.setPrice(cart.getProduct().getDiscountPrice());
-
-            order.setQuantity(cart.getQuantity());
-            order.setUser(cart.getUser());
-
-            order.setStatus(OrderStatus.IN_PROGRESS.getName());
-            order.setPaymentType(orderRequest.getPaymentType());
-
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setFirstName(orderRequest.getFirstName());
-            orderDetail.setLastName(orderRequest.getLastName());
-            orderDetail.setEmail(orderRequest.getEmail());
-            orderDetail.setMobileNo(orderRequest.getMobileNo());
-            orderDetail.setAddress(orderRequest.getAddress());
+        // Lưu thông tin địa chỉ đơn hàng
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setFirstName(orderRequest.getFirstName());
+        orderDetail.setLastName(orderRequest.getLastName());
+        orderDetail.setEmail(orderRequest.getEmail());
+        orderDetail.setMobileNo(orderRequest.getMobileNo());
 
 
 
 
-            ProductOrder saveOrder = orderRepository.save(order);
-            commonUtil.sendMailForProductOrder(saveOrder, "success");
-        }
+
+        // Lưu đơn hàng vào database
+        ProductOrder savedOrder = orderRepository.save(order);
+
+        // Gửi email xác nhận đơn hàng
+        commonUtil.sendMailForProductOrder(savedOrder, "success");
+
+        // Xóa sản phẩm khỏi giỏ hàng sau khi đặt hàng thành công
+        cartRepository.delete(cart);
     }
+
 
     @Override
     public List<ProductOrder> getOrdersByUser(Integer userId) {

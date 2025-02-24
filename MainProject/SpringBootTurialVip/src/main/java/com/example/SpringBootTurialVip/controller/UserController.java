@@ -23,6 +23,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/users")//do user dùng chung nhiều khai bóa ở đây ở dưới sẽ ko cần
@@ -162,8 +163,20 @@ public class UserController {
         return ResponseEntity.ok(userService.updateChildrenByParent(request));
     }
 
-    //API order vaccine
+    //API : Cart
+    @PostMapping("/addCart")
+    public ResponseEntity<ApiResponse<Cart>> addToCart(@RequestParam Long pid, @RequestParam Long uid) {
+        Cart savedCart = cartService.saveCart(pid, uid);
 
+        if (ObjectUtils.isEmpty(savedCart)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(1004, "Product add to cart failed", null));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Product added to cart", savedCart));
+    }
+
+    //API order vaccine
     private UserResponse getLoggedInUserDetails() {
 
         UserResponse user = userService.getMyInfo();
@@ -193,32 +206,21 @@ public class UserController {
 
     //API tạo order dựa trên token truy ra thông tin cá nhân để lưu vào
     @PostMapping("/saveOrder")
-    public ResponseEntity<ApiResponse<String>> saveOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<ApiResponse<String>> saveOrder(@RequestParam Long cartId, @RequestBody OrderRequest orderRequest) {
         try {
-            // Lấy thông tin user đang đăng nhập
-            UserResponse user = userService.getMyInfo();
-            orderService.saveOrder(user.getId(), request);
-
-            // Trả về phản hồi JSON chuẩn RESTful
+            orderService.saveOrder(cartId, orderRequest);
             return ResponseEntity.ok(new ApiResponse<>(1000, "Order saved successfully", null));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(1004, "Error: " + e.getMessage(), null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(1004, "Failed to save order: " + e.getMessage(), null));
+                    .body(new ApiResponse<>(1004, "Unexpected error: " + e.getMessage(), null));
         }
     }
 
-    //API : Cart
-    @GetMapping("/addCart")
-    public ResponseEntity<ApiResponse<Cart>> addToCart(@RequestParam Long pid, @RequestParam Long uid) {
-        Cart savedCart = cartService.saveCart(pid, uid);
 
-        if (ObjectUtils.isEmpty(savedCart)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiResponse<>(1004, "Product add to cart failed", null));
-        }
 
-        return ResponseEntity.ok(new ApiResponse<>(1000, "Product added to cart", savedCart));
-    }
 
 
 

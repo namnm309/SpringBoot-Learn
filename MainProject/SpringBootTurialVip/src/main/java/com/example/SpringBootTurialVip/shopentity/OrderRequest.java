@@ -16,8 +16,6 @@ public class OrderRequest {
 	private String email;
 
 	private String mobileNo;
-
-	private String address;
 	
 	private String paymentType;
 

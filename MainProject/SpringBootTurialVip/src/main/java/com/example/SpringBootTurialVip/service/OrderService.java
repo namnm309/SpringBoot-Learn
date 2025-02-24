@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    public void saveOrder(Long userid, OrderRequest orderRequest) throws Exception;
+    public void saveOrder(Long cartid, OrderRequest orderRequest) throws Exception;
 
     public List<ProductOrder> getOrdersByUser(Integer userId);
 
