@@ -41,33 +41,30 @@ public class UserController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private
-
-    //API tạo user
-    @PostMapping("/createUser")
-    ApiResponse<User> createUser(@RequestBody
-                    @Valid  //annotation này dùng đề khai báo cần phải validate object truyền vào phải tuân thủ rule của Object trong server
-                    UserCreationRequest request){
-        ApiResponse<User> apiResponse=new ApiResponse<>();
-
-        apiResponse.setResult(userService.createUser(request));
-
-        return apiResponse;
-    }
-
-    //Verify account de log in
-    @PostMapping("/verify")
-    public ResponseEntity<?> verifyUser(@RequestBody
-                                            @Valid
-                                            VerifyAccountRequest verifyAccountRequest) {
-        try {
-            userService.verifyUser(verifyAccountRequest);
-            return ResponseEntity.ok("Account verified successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    //API tạo user
+//    @PostMapping("/createUser")
+//    ApiResponse<User> createUser(@RequestBody
+//                    @Valid  //annotation này dùng đề khai báo cần phải validate object truyền vào phải tuân thủ rule của Object trong server
+//                    UserCreationRequest request){
+//        ApiResponse<User> apiResponse=new ApiResponse<>();
+//
+//        apiResponse.setResult(userService.createUser(request));
+//
+//        return apiResponse;
+//    }
+//
+//    //Verify account de log in
+//    @PostMapping("/verify")
+//    public ResponseEntity<?> verifyUser(@RequestBody
+//                                            @Valid
+//                                            VerifyAccountRequest verifyAccountRequest) {
+//        try {
+//            userService.verifyUser(verifyAccountRequest);
+//            return ResponseEntity.ok("Account verified successfully");
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 
     //Resend ma verifinecode to email
 //    @PostMapping("/resend")
