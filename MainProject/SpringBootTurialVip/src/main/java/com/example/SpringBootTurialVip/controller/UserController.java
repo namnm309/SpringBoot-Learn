@@ -9,6 +9,7 @@ import com.example.SpringBootTurialVip.service.OrderService;
 import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
 import com.example.SpringBootTurialVip.shopentity.Cart;
 import com.example.SpringBootTurialVip.shopentity.OrderRequest;
+import com.example.SpringBootTurialVip.util.CommonUtil;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -17,16 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")//do user dùng chung nhiều khai bóa ở đây ở dưới sẽ ko cần
@@ -123,17 +122,12 @@ public class UserController {
 //        User updateUser(@PathVariable String userId ,@RequestBody UserUpdateRequest updateRequest){//Tạo 1 object request mới
 //            return userService.updateUser(userId,updateRequest);
 //        }
-    @PutMapping("/{userId}")//update dựa trên ID
+    @PutMapping("/{userId}")//Update dựa trên ID
     UserResponse updateUser(@PathVariable Long userId ,@RequestBody UserUpdateRequest updateRequest){//Tạo 1 object request mới
         return userService.updateUser(userId,updateRequest);
     }
 
-    //API xóa thông tin user
-    @DeleteMapping("/delete/{userId}")
-    String deleteUser(@PathVariable("userId") Long userID){
-        userService.deleteUser(userID);
-        return "Đã delete user và danh sách sau khi delete là : ";
-    }
+
 
     //Thông tin cá nhân
     @GetMapping("/myInfo")
@@ -223,34 +217,9 @@ public class UserController {
     }
 
 
-    //APi quên mật khẩu
 
 
-        @PostMapping("/forgot-password")
-        public ResponseEntity<?> processForgotPassword(@RequestParam String email,
-                                                       HttpServletRequest request)
-                throws UnsupportedEncodingException, MessagingException {
 
-            User userByEmail = userService.getUserByEmail(email);
-
-            if (ObjectUtils.isEmpty(userByEmail)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Invalid email"));
-            }
-
-            String resetToken = UUID.randomUUID().toString();
-            userService.updateUserResetToken(email, resetToken);
-
-            String url = CommonUtil.generateUrl(request) + "/reset-password?token=" + resetToken;
-
-            Boolean sendMail = commonUtil.sendMail(url, email);
-
-            if (sendMail) {
-                return ResponseEntity.ok(Map.of("message", "Password reset link has been sent to your email"));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(Map.of("message", "Something went wrong! Email not sent"));
-            }
-        }
 
 
 

@@ -35,6 +35,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
     // Lấy tất cả `Parent` (User có parent_id = NULL)
     List<User> findByParentidIsNull();
 
+    //Tìm user = resest token để change password
+    public User findByResetToken(String token);
+
 
 
 

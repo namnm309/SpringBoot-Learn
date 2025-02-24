@@ -213,6 +213,10 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
+    public User updateUserByResetToken(User user) {
+        return userRepository.save(user);
+    }
+
     //Xóa user
     public void deleteUser(Long userId){
         userRepository.deleteById(userId);
@@ -313,6 +317,16 @@ public class UserService {
     //
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void updateUserResetToken(String email, String resetToken) {
+        User user = userRepository.findByEmail(email);
+        user.setResetToken(resetToken);
+        userRepository.save(user);
+    }
+
+    public User getUserByToken(String token) {
+        return userRepository.findByResetToken(token);
     }
 
 

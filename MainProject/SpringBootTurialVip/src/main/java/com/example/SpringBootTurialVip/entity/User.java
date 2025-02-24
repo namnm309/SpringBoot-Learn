@@ -75,6 +75,8 @@ public class User  {
 
     private Boolean accountNonLocked;
 
+    private String resetToken;
+
 
 //    public User() {
 //    }

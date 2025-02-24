@@ -7,6 +7,7 @@ import com.example.SpringBootTurialVip.dto.response.UserResponse;
 import com.example.SpringBootTurialVip.service.CategoryService;
 import com.example.SpringBootTurialVip.service.ProductService;
 import com.example.SpringBootTurialVip.service.serviceimpl.StaffService;
+import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
 import com.example.SpringBootTurialVip.shopentity.Category;
 import com.example.SpringBootTurialVip.shopentity.Product;
 import jakarta.servlet.http.HttpSession;
@@ -52,8 +53,18 @@ public class StaffController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private UserService userService;
+
 //    public StaffController(StaffService staffService) {
 //        this.staffService = staffService;
+//    }
+
+    //API xóa thông tin user
+//    @DeleteMapping("/delete/{userId}")
+//    String deleteUser(@PathVariable("userId") Long userID){
+//        userService.deleteUser(userID);
+//        return "Đã delete user và danh sách sau khi delete là : ";
 //    }
 
     //API: Xem danh sách tất cả trẻ

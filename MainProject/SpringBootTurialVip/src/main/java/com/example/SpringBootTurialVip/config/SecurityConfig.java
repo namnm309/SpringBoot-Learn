@@ -37,11 +37,13 @@ public class SecurityConfig {
 
     //Tạo biến để cho phép các endpoint
     private final String [] PUBLIC_ENDPOINT={
-            "/auth/loginToken"
-            ,"/auth/verifyToken"
-            ,"/users/createUser"
-             ,"/users/verify"
-                ,"/users/resend"};
+            "/auth/loginToken",
+            "/auth/verifyToken",
+            "/users/createUser",
+            "/users/verify",
+            "/users/resend",
+            "home/**"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -55,6 +57,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINT)//chỉ cho phép admin truy cập vào api này
                         .permitAll()
                         .requestMatchers("/staff/**").hasAnyRole("ADMIN")
+
                         //.hasAuthority("ROLE_ADMIN")//chỉ cho phép admin truy cập vào api này
                         //.hasRole(Role.ADMIN.name())
                         .anyRequest()
