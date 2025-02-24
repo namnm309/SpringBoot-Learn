@@ -64,7 +64,6 @@ public class AuthenticationController {
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
                 .build();
-
     }
 
     @PostMapping("/verifyToken")
