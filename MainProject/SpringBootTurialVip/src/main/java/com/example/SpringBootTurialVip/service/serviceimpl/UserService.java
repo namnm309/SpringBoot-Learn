@@ -95,9 +95,9 @@ public class UserService {
 
     //Method xac thuc account de cho phep dang nhap
     public void verifyUser(VerifyAccountRequest verifyAccountRequest) {
-        Optional<User> optionalUser = userRepository.findByEmail(verifyAccountRequest.getEmail());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        User optionalUser = userRepository.findByEmail(verifyAccountRequest.getEmail());
+        if (optionalUser != null) {
+            User user = optionalUser;
             if (user.getVerficationexpiration().isBefore(LocalDateTime.now())) {
                 throw new RuntimeException("Verification code has expired");
             }
@@ -116,9 +116,9 @@ public class UserService {
 
     //Method cho phep gui lai ma code
     public void resendVerificationCode(String email) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        User optionalUser = userRepository.findByEmail(email);
+        if (optionalUser != null ) {
+            User user = optionalUser;
             if (user.isEnabled()) {
                 throw new RuntimeException("Account is already verified");
             }
@@ -308,6 +308,11 @@ public class UserService {
         userRepository.saveAll(children);
 
         return children.stream().map(userMapper::toChildResponse).collect(Collectors.toList());
+    }
+
+    //
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 

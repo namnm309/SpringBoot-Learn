@@ -9,6 +9,8 @@ import com.example.SpringBootTurialVip.service.OrderService;
 import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
 import com.example.SpringBootTurialVip.shopentity.Cart;
 import com.example.SpringBootTurialVip.shopentity.OrderRequest;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +40,9 @@ public class UserController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private
 
     //API tạo user
     @PostMapping("/createUser")
@@ -219,6 +225,35 @@ public class UserController {
         }
     }
 
+
+    //APi quên mật khẩu
+
+
+        @PostMapping("/forgot-password")
+        public ResponseEntity<?> processForgotPassword(@RequestParam String email,
+                                                       HttpServletRequest request)
+                throws UnsupportedEncodingException, MessagingException {
+
+            User userByEmail = userService.getUserByEmail(email);
+
+            if (ObjectUtils.isEmpty(userByEmail)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Invalid email"));
+            }
+
+            String resetToken = UUID.randomUUID().toString();
+            userService.updateUserResetToken(email, resetToken);
+
+            String url = CommonUtil.generateUrl(request) + "/reset-password?token=" + resetToken;
+
+            Boolean sendMail = commonUtil.sendMail(url, email);
+
+            if (sendMail) {
+                return ResponseEntity.ok(Map.of("message", "Password reset link has been sent to your email"));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Map.of("message", "Something went wrong! Email not sent"));
+            }
+        }
 
 
 
