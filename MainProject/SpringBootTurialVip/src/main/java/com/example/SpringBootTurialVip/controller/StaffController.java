@@ -4,12 +4,16 @@ import com.example.SpringBootTurialVip.dto.request.ApiResponse;
 import com.example.SpringBootTurialVip.dto.request.ChildCreationRequest;
 import com.example.SpringBootTurialVip.dto.response.ChildResponse;
 import com.example.SpringBootTurialVip.dto.response.UserResponse;
+import com.example.SpringBootTurialVip.enums.OrderStatus;
 import com.example.SpringBootTurialVip.service.CategoryService;
+import com.example.SpringBootTurialVip.service.OrderService;
 import com.example.SpringBootTurialVip.service.ProductService;
 import com.example.SpringBootTurialVip.service.serviceimpl.StaffService;
 import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
 import com.example.SpringBootTurialVip.shopentity.Category;
 import com.example.SpringBootTurialVip.shopentity.Product;
+import com.example.SpringBootTurialVip.shopentity.ProductOrder;
+import com.example.SpringBootTurialVip.util.CommonUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +33,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/staff")//do user dùng chung nhiều khai bóa ở đây ở dưới sẽ ko cần
@@ -55,6 +61,13 @@ public class StaffController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private CommonUtil commonUtil;
+
 
 //    public StaffController(StaffService staffService) {
 //        this.staffService = staffService;
@@ -285,6 +298,44 @@ public class StaffController {
         }
 
         return ResponseEntity.ok(new ApiResponse<>(1000, "Categories found", categories));
+    }
+
+    //API cập nhật  tình trạng đơn hàng
+    @PutMapping("/update-status")
+    public ResponseEntity<ApiResponse<ProductOrder>> updateOrderStatus(
+            @RequestParam Long id,//ID đơn hàng
+            @RequestParam Integer statusId) {
+
+        //Tìm `OrderStatus` nhanh hơn bằng Stream API
+        Optional<OrderStatus> matchedStatus = Arrays.stream(OrderStatus.values())
+                .filter(orderStatus -> orderStatus.getId().equals(statusId))
+                .findFirst();
+
+        if (matchedStatus.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(1001, "Invalid status ID", null));
+        }
+
+        String status = matchedStatus.get().getName();
+
+        // Cập nhật trạng thái đơn hàng
+        ProductOrder updatedOrder = orderService.updateOrderStatus(id, status);
+
+        if (updatedOrder == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(1002, "Order not found or status not updated", null));
+        }
+
+        // Gửi email thông báo nếu cần
+        try {
+            commonUtil.sendMailForProductOrder(updatedOrder, status);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(1003, "Order updated but email failed", updatedOrder));
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>(1000, "Order status updated successfully", updatedOrder));
     }
 
     //API cho xem order

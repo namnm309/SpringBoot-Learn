@@ -23,6 +23,7 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
+    //API tạo quyền quản lí
     @PostMapping("/create")
     ApiResponse<PermissionResponse> create(@RequestBody
                                            //@Valid //tuân thủ request
@@ -32,6 +33,7 @@ public class PermissionController {
                 .build();
     }
 
+    //API xem tất cả quyền quản lí
     @GetMapping("/getAll")
     ApiResponse<List<PermissionResponse>> getAll() {
         return ApiResponse.<List<PermissionResponse>>builder()
@@ -39,6 +41,7 @@ public class PermissionController {
                 .build();
     }
 
+    //API xóa quyền quản lí
     @DeleteMapping("/delete/{permission}")
     ApiResponse<Void> delete(@PathVariable String permission) {
         permissionService.delete(permission);

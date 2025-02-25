@@ -24,5 +24,10 @@ public class Role {
 
     //Quan hệ với bảng permission
     @ManyToMany//(mappedBy = "roles")//ánh xạ role ngược lại với user , có thể lấy list user thuộc role nào đó
+//    @JoinTable(
+//            name = "tbl_roles_permissions", // Bảng trung gian
+//            joinColumns = @JoinColumn(name = "role_role_name"), // Liên kết với Role
+//            inverseJoinColumns = @JoinColumn(name = "permissions_permission_name") // Liên kết với Permission
+//    )
     Set<Permission> permissions;
 }

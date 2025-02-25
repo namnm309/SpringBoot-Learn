@@ -22,11 +22,11 @@ public class Permission {
     @Column(name="permission_description")
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_roles_permissions",
-            joinColumns = @JoinColumn(name = "permissions_permission_name"),
-            inverseJoinColumns = @JoinColumn(name = "role_role_name")
-    )
-    private Set<Role> roles;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "tbl_roles_permissions",
+//            joinColumns = @JoinColumn(name = "permissions_permission_name"),
+//            inverseJoinColumns = @JoinColumn(name = "role_role_name")
+//    )
+//    private Set<Role> roles;
 }

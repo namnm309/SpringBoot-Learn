@@ -10,9 +10,9 @@ public interface OrderService {
 
     public void saveOrder(Long cartid, OrderRequest orderRequest) throws Exception;
 
-    public List<ProductOrder> getOrdersByUser(Integer userId);
+    public List<ProductOrder> getOrdersByUser(Long userId);
 
-    public ProductOrder updateOrderStatus(Integer id, String status);
+    public ProductOrder updateOrderStatus(Long id, String status);
 
     public List<ProductOrder> getAllOrders();
 

@@ -19,7 +19,7 @@ public class ProductOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	private String orderId;
 
@@ -33,6 +33,7 @@ public class ProductOrder {
 	private Integer quantity;
 
 	@ManyToOne
+//	@JoinColumn(name = "user_user_id", referencedColumnName = "id", nullable = false)
 	private User user;
 
 	private String status;

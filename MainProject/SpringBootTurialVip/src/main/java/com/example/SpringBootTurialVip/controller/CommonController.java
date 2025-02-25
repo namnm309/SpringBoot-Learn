@@ -51,6 +51,29 @@ public class CommonController {
     @Autowired
     AuthenticationServiceImpl authenticationServiceImpl;
 
+    //API show ra vaccine khi chưa log in
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProduct() {
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+    //API show ra category khi chưa log in
+    @GetMapping("/showCategory")
+    public ResponseEntity<ApiResponse<List<Category>>> loadAddProduct() {
+        List<Category> categories = categoryService.getAllCategory();
+        ApiResponse<List<Category>> response = new ApiResponse<>(1000, "Fetched categories successfully", categories);
+        return ResponseEntity.ok(response);
+    }
+
+    //API Đăng nhập ở home
+    @PostMapping("/login")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+        var result = authenticationServiceImpl.authencicate(authenticationRequest);
+
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(result)
+                .build();
+    }
 
     //API nhập quên mật khẩu
     @PostMapping("/forgot-password")
@@ -123,44 +146,8 @@ public class CommonController {
         return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
     }
 
-    //Verify account de log in
-    @PostMapping("/verify")
-    public ResponseEntity<?> verifyUser(@RequestBody
-                                        @Valid
-                                        VerifyAccountRequest verifyAccountRequest) {
-        try {
-            userService.verifyUser(verifyAccountRequest);
-            return ResponseEntity.ok("Account verified successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 
-    //API show ra category khi chưa log in
-    @GetMapping("/showCategory")
-    public ResponseEntity<ApiResponse<List<Category>>> loadAddProduct() {
-        List<Category> categories = categoryService.getAllCategory();
-        ApiResponse<List<Category>> response = new ApiResponse<>(1000, "Fetched categories successfully", categories);
-        return ResponseEntity.ok(response);
-    }
-
-    //API show ra vaccine khi chưa log in
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProduct() {
-        return ResponseEntity.ok(productService.getAllProducts());
-    }
-
-    //API Đăng nhập ở home
-    @PostMapping("/loginToken")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
-        var result = authenticationServiceImpl.authencicate(authenticationRequest);
-
-        return ApiResponse.<AuthenticationResponse>builder()
-                .result(result)
-                .build();
-    }
-
-    //API Đăng ký ở home
+    //API Đăng ký  tài khoản ở home
     @PostMapping("/createUser")
     ApiResponse<User> createUser(@RequestBody
                                  @Valid  //annotation này dùng đề khai báo cần phải validate object truyền vào phải tuân thủ rule của Object trong server
@@ -171,5 +158,8 @@ public class CommonController {
 
         return apiResponse;
     }
+
+
+
 
 }

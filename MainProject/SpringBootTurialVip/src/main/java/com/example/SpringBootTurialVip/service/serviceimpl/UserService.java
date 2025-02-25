@@ -199,7 +199,7 @@ public class UserService {
 
 
 
-    //Cập nhật thông tin
+    //Cập nhật thông tin ver cũ
     @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse updateUser(Long userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
@@ -212,6 +212,13 @@ public class UserService {
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
+
+    //Cập nhật thông tin ver mới
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+
 
     public User updateUserByResetToken(User user) {
         return userRepository.save(user);
@@ -327,6 +334,10 @@ public class UserService {
 
     public User getUserByToken(String token) {
         return userRepository.findByResetToken(token);
+    }
+
+    public Optional<User> getUserByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 
 

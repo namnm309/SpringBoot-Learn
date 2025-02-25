@@ -42,7 +42,9 @@ public class SecurityConfig {
             "/users/createUser",
             "/users/verify",
             "/users/resend",
-            "home/**"
+            "home/**",
+            "/swagger-ui/**",
+            "/v3/api-docs*/**"
     };
 
     @Bean

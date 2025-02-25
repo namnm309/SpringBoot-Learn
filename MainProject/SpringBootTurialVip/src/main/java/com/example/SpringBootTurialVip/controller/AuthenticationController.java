@@ -2,15 +2,19 @@ package com.example.SpringBootTurialVip.controller;
 
 import com.example.SpringBootTurialVip.dto.request.AuthenticationRequest;
 import com.example.SpringBootTurialVip.dto.request.ApiResponse;
+import com.example.SpringBootTurialVip.dto.request.VerifyAccountRequest;
 import com.example.SpringBootTurialVip.dto.request.VerifyTokenRequest;
 import com.example.SpringBootTurialVip.dto.response.AuthenticationResponse;
 import com.example.SpringBootTurialVip.dto.response.VerifyTokenResponse;
 import com.example.SpringBootTurialVip.service.serviceimpl.AuthenticationServiceImpl;
+import com.example.SpringBootTurialVip.service.serviceimpl.UserService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,32 +35,11 @@ public class AuthenticationController {
     //Tạo AuthenticationService
     @Autowired
     AuthenticationServiceImpl authenticationServiceImpl;
-//    AuthenticationRequest authenticationRequest;
-//
-//    public AuthenticationController( AuthenticationService authenticationService
-//                                    ,AuthenticationRequest authenticationRequest){
-//        this.authenticationService=authenticationService;
-//        //this.authenticationRequest=authenticationRequest;
-//    }
 
-//    @PostMapping("/log-in")
-//    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
-//        boolean result = authenticationService.authencicate(authenticationRequest);
-//
-//
-//
-////        return ApiResponse.<AuthenticationResponse>builder()
-////                .result(AuthenticationResponse.builder()
-////                        .authenticated(request)
-////                        .build())
-////                .build();
-//
-//        return ApiResponse.<AuthenticationResponse>builder()
-//                .result(new AuthenticationResponse(result))
-//                .build();
-//
-//    }
+    @Autowired
+    UserService userService;
 
+    //API login
     @PostMapping("/loginToken")
     ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
         var result = authenticationServiceImpl.authencicate(authenticationRequest);
@@ -66,6 +49,7 @@ public class AuthenticationController {
                 .build();
     }
 
+    //API xác thực token ( chỉ test )
     @PostMapping("/verifyToken")
     ApiResponse<VerifyTokenResponse> authenticate(@RequestBody VerifyTokenRequest request) throws ParseException, JOSEException {
         var result = authenticationServiceImpl.verifyTokenResponse(request);
@@ -75,5 +59,22 @@ public class AuthenticationController {
                 .build();
 
     }
+
+    //API Verify account để log in
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyUser(@RequestBody
+                                        @Valid
+                                        VerifyAccountRequest verifyAccountRequest) {
+        try {
+            userService.verifyUser(verifyAccountRequest);
+            return ResponseEntity.ok("Account verified successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+
+
 
 }
