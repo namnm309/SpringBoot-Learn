@@ -1,12 +1,15 @@
 package com.example.SpringBootTurialVip.service.serviceimpl;
 
 import com.example.SpringBootTurialVip.dto.request.AuthenticationRequest;
+import com.example.SpringBootTurialVip.dto.request.LogoutRequest;
 import com.example.SpringBootTurialVip.dto.request.VerifyTokenRequest;
 import com.example.SpringBootTurialVip.dto.response.AuthenticationResponse;
 import com.example.SpringBootTurialVip.dto.response.VerifyTokenResponse;
+import com.example.SpringBootTurialVip.entity.InvalidatedToken;
 import com.example.SpringBootTurialVip.entity.User;
 import com.example.SpringBootTurialVip.exception.AppException;
 import com.example.SpringBootTurialVip.exception.ErrorCode;
+import com.example.SpringBootTurialVip.repository.InvalidatedTokenRepository;
 import com.example.SpringBootTurialVip.repository.UserRepository;
 import com.example.SpringBootTurialVip.service.AuthenticationService;
 import com.nimbusds.jose.*;
@@ -32,6 +35,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor//Autowired các bean
@@ -46,6 +50,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonFinal//đánh dấu ko inject vào constructure
     @Value("${jwt.signerKey}")//đọc key từ file properties
     protected  String SIGN_KEY;
+
+    @Autowired
+    InvalidatedTokenRepository invalidatedTokenRepository;
+
+    @NonFinal
+    @Value("${jwt.refreshable-duration}")
+    protected long REFRESHABLE_DURATION;
 
 //    public AuthenticationService(UserRepository userRepository) {
 //        this.userRepository = userRepository;
@@ -62,7 +73,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        //So sánh 2 password
 //        return passwordEncoder.matches(request.getPassword(), user.getPassword());
 //    }
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+        var token = request.getToken();
+        boolean isValid = true;
 
+        try {
+            verifyToken(token, false);
+        } catch (AppException e) {
+            isValid = false;
+        }
+
+        return IntrospectResponse.builder().valid(isValid).build();
+    }
     @Override
     public AuthenticationResponse authencicate(AuthenticationRequest request){
         //Tạo obj đ dùng nó sử dụng method matches trong lớp PasswordEncoder
@@ -117,6 +139,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()//define hết hạn sau 1h
                 ))//time tồn tại của token
+                .jwtID(UUID.randomUUID().toString())//tạo id cho token
                 .claim("email", user.getEmail())
                 .claim("scope",buildScope(user))
                 .build();
@@ -160,26 +183,67 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return stringJoiner.toString();
     }
 
-    //Tạo method Verify Token
-    public VerifyTokenResponse verifyTokenResponse(VerifyTokenRequest request)
-            throws JOSEException, ParseException {
-        var token=request.getToken();
+    //Logout
+    public void logout(LogoutRequest request) throws ParseException, JOSEException {
+        try {
+            var signToken = verifyToken(request.getToken(), true);
 
-        //Để verify token thì thư viện nimsbot cung cấp JWSVerifier
-        JWSVerifier verifier=new MACVerifier(SIGN_KEY.getBytes());
+            String jit = signToken.getJWTClaimsSet().getJWTID();
+            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
 
-        SignedJWT signedJWT=SignedJWT.parse(token);
+            InvalidatedToken invalidatedToken =
+                    InvalidatedToken.builder().id(jit).expiryTime(expiryTime).build();
 
-        //Check xem token hết hạn ?
-        Date expityTime=signedJWT.getJWTClaimsSet().getExpirationTime();
-
-        var verified=signedJWT.verify(verifier);//check
-
-        return VerifyTokenResponse.builder()
-                .valid(verified && expityTime.after(new Date()))
-                .build();
-
+            invalidatedTokenRepository.save(invalidatedToken);
+        } catch (AppException exception) {
+            log.info("Token already expired");
+        }
     }
+
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
+        JWSVerifier verifier = new MACVerifier(SIGN_KEY.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+        Date expiryTime = (isRefresh)
+                ? new Date(signedJWT
+                .getJWTClaimsSet()
+                .getIssueTime()
+                .toInstant()
+                .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                .toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        var verified = signedJWT.verify(verifier);
+
+        if (!(verified && expiryTime.after(new Date()))) throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        return signedJWT;
+    }
+
+    //Tạo method Verify Token
+//    public VerifyTokenResponse verifyTokenResponse(VerifyTokenRequest request)
+//            throws JOSEException, ParseException {
+//        var token=request.getToken();
+//
+//        //Để verify token thì thư viện nimsbot cung cấp JWSVerifier
+//        JWSVerifier verifier=new MACVerifier(SIGN_KEY.getBytes());
+//
+//        SignedJWT signedJWT=SignedJWT.parse(token);
+//
+//        //Check xem token hết hạn ?
+//        Date expityTime=signedJWT.getJWTClaimsSet().getExpirationTime();
+//
+//        var verified=signedJWT.verify(verifier);//check
+//
+//        return VerifyTokenResponse.builder()
+//                .valid(verified && expityTime.after(new Date()))
+//                .build();
+//
+//    }
     }
 
 
