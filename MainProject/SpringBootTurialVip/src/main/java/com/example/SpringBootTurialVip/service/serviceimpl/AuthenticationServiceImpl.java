@@ -58,6 +58,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
 
+    @NonFinal
+    @Value("${jwt.valid-duration}")
+    protected long VALID_DURATION;
+
 //    public AuthenticationService(UserRepository userRepository) {
 //        this.userRepository = userRepository;
 //    }
@@ -73,17 +77,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        //So sánh 2 password
 //        return passwordEncoder.matches(request.getPassword(), user.getPassword());
 //    }
-    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+    @Override
+    public VerifyTokenResponse introspect(VerifyTokenRequest request) {
         var token = request.getToken();
         boolean isValid = true;
 
         try {
             verifyToken(token, false);
-        } catch (AppException e) {
+        } catch (AppException | JOSEException | ParseException e) {
             isValid = false;
         }
 
-        return IntrospectResponse.builder().valid(isValid).build();
+        return VerifyTokenResponse.builder().valid(isValid).build();
     }
     @Override
     public AuthenticationResponse authencicate(AuthenticationRequest request){
@@ -137,7 +142,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .issuer("mNamDEv")//token đc issuser từ ai
                 .issueTime(new Date())//time tạo token
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()//define hết hạn sau 1h
+                        Instant.now().plus(VALID_DURATION, ChronoUnit.HOURS).toEpochMilli()//define hết hạn sau 1h
                 ))//time tồn tại của token
                 .jwtID(UUID.randomUUID().toString())//tạo id cho token
                 .claim("email", user.getEmail())

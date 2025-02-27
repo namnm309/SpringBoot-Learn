@@ -41,5 +41,4 @@ public class ProductOrder {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private OrderDetail orderDetail;
-
 }

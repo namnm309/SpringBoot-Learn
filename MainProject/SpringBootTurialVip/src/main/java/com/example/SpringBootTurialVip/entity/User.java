@@ -1,5 +1,7 @@
 package com.example.SpringBootTurialVip.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +10,20 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity//Đánh dấu đây là 1 table để map lên từ database
-@Table(name="tbl_users")
+@Table(name="tbl_users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = "phone")
+        })
 // hibernate dưới jpa sẽ giúp chúng ta lm vc vs database
 public class User  {
     @Id//Định nghĩa cho ID
@@ -23,6 +31,7 @@ public class User  {
     @Column(name="user_id")
     private Long id;
 
+    @Schema(description = "ID của parent, nếu không có thì để trống", nullable = true, example = "null")
     @Column(name="parent_id")
     private Long parentid;
 
@@ -59,16 +68,9 @@ public class User  {
     @Column(name="verification_cod")
     private String verificationcode;
 
-//    @Column(name="verification_expired")
-//    private LocalTime verification_expired;
 
     @Column(name="verification_expiration")
     private LocalDateTime verficationexpiration;
-
-    //1 user có nhiều roles
-
-//      @ManyToMany
-        //Set<String> roles;//Trong 1 set chỉ có unique item
 
     @ManyToMany
     Set<Role> roles;
@@ -76,6 +78,15 @@ public class User  {
     private Boolean accountNonLocked;
 
     private String resetToken;
+
+    // Một người dùng (cha/mẹ) có thể có nhiều trẻ
+//    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<User> children;
+//
+//    // Một trẻ chỉ có một cha/mẹ
+//    @ManyToOne
+//    @JoinColumn(name = "parent_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+//    private User parent;
 
 
 //    public User() {

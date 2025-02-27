@@ -19,6 +19,7 @@ public class Cart {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "user_user_id", referencedColumnName = "user_id", nullable = false)
 	private User user;
 
 	@ManyToOne

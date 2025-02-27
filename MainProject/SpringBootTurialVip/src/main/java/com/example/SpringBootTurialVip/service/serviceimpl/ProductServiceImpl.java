@@ -1,5 +1,6 @@
 package com.example.SpringBootTurialVip.service.serviceimpl;
 
+import com.example.SpringBootTurialVip.dto.request.ProductRequest;
 import com.example.SpringBootTurialVip.service.ProductService;
 import com.example.SpringBootTurialVip.entity.Product;
 import com.example.SpringBootTurialVip.repository.ProductRepository;

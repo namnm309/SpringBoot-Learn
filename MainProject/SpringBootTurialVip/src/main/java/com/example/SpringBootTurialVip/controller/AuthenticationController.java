@@ -79,6 +79,7 @@ public class AuthenticationController {
     }
 
     //API logout
+    @Operation(summary = "(KO AUTHEN) API logout , truyền vào token hiện tại")
     @PostMapping("/logout")
     ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authenticationServiceImpl.logout(request);

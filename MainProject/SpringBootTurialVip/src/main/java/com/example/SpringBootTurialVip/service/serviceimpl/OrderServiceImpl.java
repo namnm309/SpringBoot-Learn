@@ -1,10 +1,8 @@
 package com.example.SpringBootTurialVip.service.serviceimpl;
 
+import com.example.SpringBootTurialVip.entity.*;
+import com.example.SpringBootTurialVip.repository.UserRepository;
 import com.example.SpringBootTurialVip.service.OrderService;
-import com.example.SpringBootTurialVip.entity.Cart;
-import com.example.SpringBootTurialVip.entity.OrderDetail;
-import com.example.SpringBootTurialVip.entity.OrderRequest;
-import com.example.SpringBootTurialVip.entity.ProductOrder;
 import com.example.SpringBootTurialVip.repository.CartRepository;
 import com.example.SpringBootTurialVip.repository.ProductOrderRepository;
 import com.example.SpringBootTurialVip.util.CommonUtil;
@@ -30,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void saveOrder(Long cartId, OrderRequest orderRequest) throws Exception {
@@ -66,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
         // Xóa sản phẩm khỏi giỏ hàng sau khi đặt hàng thành công
         cartRepository.delete(cart);
     }
+
 
 
     @Override

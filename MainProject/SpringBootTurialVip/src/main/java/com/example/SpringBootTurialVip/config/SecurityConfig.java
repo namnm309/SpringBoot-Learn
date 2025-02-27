@@ -1,6 +1,7 @@
 package com.example.SpringBootTurialVip.config;
 
 import com.example.SpringBootTurialVip.enums.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,17 +31,19 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomJwtDecoder jwtDecoder;
 
-
-    @Value("${jwt.signerKey}")
-    private String signerKey;
+//    @Value("${jwt.signerKey}")
+//    private String signerKey;
 
     //Tạo biến để cho phép các endpoint
     private final String [] PUBLIC_ENDPOINT={
             "/auth/loginToken",
             "/auth/verifyToken",
+            "/auth/logout",
             "/users/createUser",
-            "/users/verify",
+            "/auth/verify",
             "/users/resend",
             "home/**",
     };
@@ -80,7 +83,7 @@ public class SecurityConfig {
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer
                         //.jwkSetUri() , dùng cho bên thứ 3
-                                .decoder(jwtDecoder())//cần implement
+                                .decoder(jwtDecoder)//cần implement
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())//Nếu thêm method này thì authorize trên sẽ disabled
                         ));
 
@@ -120,14 +123,14 @@ public class SecurityConfig {
     }
 
     //Method này check token có hợp lệ kjo để cho phép truy cập
-    @Bean
-    JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKeySpec=new SecretKeySpec(signerKey.getBytes(),"HS512");
-        return NimbusJwtDecoder
-                .withSecretKey(secretKeySpec)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
-    }
+//    @Bean
+//    JwtDecoder jwtDecoder(){
+//        SecretKeySpec secretKeySpec=new SecretKeySpec(signerKey.getBytes(),"HS512");
+//        return NimbusJwtDecoder
+//                .withSecretKey(secretKeySpec)
+//                .macAlgorithm(MacAlgorithm.HS512)
+//                .build();
+//    }
 
 
 

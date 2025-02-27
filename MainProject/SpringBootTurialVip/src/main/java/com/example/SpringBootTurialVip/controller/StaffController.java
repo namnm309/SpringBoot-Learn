@@ -2,6 +2,7 @@ package com.example.SpringBootTurialVip.controller;
 
 import com.example.SpringBootTurialVip.dto.request.ApiResponse;
 import com.example.SpringBootTurialVip.dto.request.ChildCreationRequest;
+import com.example.SpringBootTurialVip.dto.request.ProductRequest;
 import com.example.SpringBootTurialVip.dto.response.ChildResponse;
 import com.example.SpringBootTurialVip.dto.response.UserResponse;
 import com.example.SpringBootTurialVip.enums.OrderStatus;
@@ -14,7 +15,11 @@ import com.example.SpringBootTurialVip.entity.Category;
 import com.example.SpringBootTurialVip.entity.Product;
 import com.example.SpringBootTurialVip.entity.ProductOrder;
 import com.example.SpringBootTurialVip.util.CommonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -116,35 +121,89 @@ public class StaffController {
     //API khóa tài khoản customer , có thể coi là xóa
 
     //API : Thêm sản phẩm (gồm hình ảnh (nếu 0 có sẽ default)) và các thuộc tính cần thiết khác )
-    @Operation(summary = "API thêm vaccine")
-    @PostMapping("/addProduct")
-    public ResponseEntity<?> saveProduct(@ModelAttribute Product product,
-                                         @RequestParam("file") MultipartFile image) throws IOException {
+//    @Operation(summary = "API thêm vaccine")
+//    @PostMapping("/addProduct")
+//    public ResponseEntity<?> saveProduct(@ModelAttribute Product product,
+//                                         @RequestParam("file") MultipartFile image) throws IOException {
+//
+//        try {
+//            String imageName = image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
+//            product.setImage(imageName);
+//            product.setDiscount(0);
+//            product.setDiscountPrice(product.getPrice());
+//
+//            Product savedProduct = productService.addProduct(product);
+//
+//            if (!ObjectUtils.isEmpty(savedProduct)) {//N
+//                File saveFile = new ClassPathResource("/static/img/").getFile();
+//                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
+//                        + image.getOriginalFilename());
+//                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//
+//                return ResponseEntity.ok(Collections.singletonMap("message", "Product saved successfully"));
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                        .body(Collections.singletonMap("error", "Something went wrong on server"));
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body(Collections.singletonMap("error", e.getMessage()));
+//        }
+//    }
+//    @Operation(summary = "API thêm vaccine", description = "Thêm sản phẩm vaccine với hình ảnh")
+//    @PostMapping(value = "/addProduct", consumes = {"multipart/form-data"})
+//    public ResponseEntity<?> saveProduct(
+//            @RequestPart("product") @RequestBody Product product,
+//            @RequestPart("file") @Parameter(
+//                    description = "File ảnh của sản phẩm",
+//                    content = @Content(mediaType = "multipart/form-data", schema = @Schema(type = "string", format = "binary"))
+//            ) MultipartFile image) throws IOException {
+//
+//        // Kiểm tra file có được upload không
+//        if (image == null || image.isEmpty()) {
+//            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "File is required"));
+//        }
+//
+//        // Xử lý file ảnh
+//        String imageName = image.getOriginalFilename();
+////        product.setImage(imageName);
+//        product.setDiscount(0);
+//        product.setDiscountPrice(product.getPrice());
+//
+//        // Lưu sản phẩm
+//        Product savedProduct = productService.addProduct(product);
+//        return ResponseEntity.ok(Collections.singletonMap("message", "Product saved successfully"));
+//    }
 
-        try {
-            String imageName = image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
-            product.setImage(imageName);
-            product.setDiscount(0);
-            product.setDiscountPrice(product.getPrice());
 
-            Product savedProduct = productService.addProduct(product);
+    @Operation(summary = "API thêm vaccine", description = "Thêm sản phẩm vaccine với hình ảnh")
+    @PostMapping(value = "/addProduct", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> saveProduct(
+            @RequestPart("product") String productJson, // Nhận JSON dưới dạng String
+            @RequestPart("file") MultipartFile image) throws IOException {
 
-            if (!ObjectUtils.isEmpty(savedProduct)) {//N
-                File saveFile = new ClassPathResource("/static/img/").getFile();
-                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
-                        + image.getOriginalFilename());
-                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        // Chuyển đổi productJson từ String thành đối tượng Product
+        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = objectMapper.readValue(productJson, Product.class);
 
-                return ResponseEntity.ok(Collections.singletonMap("message", "Product saved successfully"));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(Collections.singletonMap("error", "Something went wrong on server"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Collections.singletonMap("error", e.getMessage()));
+        if (image.isEmpty()) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "File is required"));
         }
+
+        // Lưu file ảnh
+        String imageName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+        product.setImage(imageName);
+
+        // Lưu sản phẩm vào DB
+        product.setDiscount(0);
+        product.setDiscountPrice(product.getPrice());
+        Product savedProduct = productService.addProduct(product);
+
+        return ResponseEntity.ok(Collections.singletonMap("message", "Product saved successfully"));
     }
+
+
+
 
     //API lấy thông tin tất cả sản phẩm
     @Operation(summary = "API xem danh sách vaccine")
