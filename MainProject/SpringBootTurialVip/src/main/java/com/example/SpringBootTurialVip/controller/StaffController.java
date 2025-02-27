@@ -73,6 +73,8 @@ public class StaffController {
     @Autowired
     private CommonUtil commonUtil;
 
+    private final ObjectMapper objectMapper = new ObjectMapper(); // Dùng để chuyển đổi JSON
+
 
 //    public StaffController(StaffService staffService) {
 //        this.staffService = staffService;
@@ -254,11 +256,61 @@ public class StaffController {
     }
 
     //API tạo Category
-    @Operation(summary = "API tạo danh mục")
-    @PostMapping("/createCategory")
-    public ResponseEntity<?> saveCategory(@ModelAttribute Category category,
-                                          @RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
+    @Operation(summary = "[BUG] API tạo danh mục")
+//    @PostMapping("/createCategory")
+//    public ResponseEntity<?> saveCategory(@ModelAttribute Category category,
+//                                          @RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
+//        try {
+//            // Xử lý tên ảnh (nếu không có, dùng mặc định)
+//            String imageName = (file != null && !file.isEmpty()) ? file.getOriginalFilename() : "default.jpg";
+//            category.setImageName(imageName);
+//
+//            // Kiểm tra nếu danh mục đã tồn tại
+//            if (categoryService.existCategory(category.getName())) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                        .body(Collections.singletonMap("error", "Category Name already exists"));
+//            }
+//
+//            // Lưu category vào DB
+//            Category savedCategory = categoryService.saveCategory(category);
+//
+//            if (!ObjectUtils.isEmpty(savedCategory)) {
+//                // Lưu file ảnh nếu có
+//                if (file != null && !file.isEmpty()) {
+//                    File saveFile = new ClassPathResource("static/img/").getFile();
+//                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "category_img" + File.separator
+//                            + file.getOriginalFilename());
+//                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//                }
+//                return ResponseEntity.ok(Collections.singletonMap("message", "Category saved successfully"));
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                        .body(Collections.singletonMap("error", "Not saved! Internal server error"));
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body(Collections.singletonMap("error", e.getMessage()));
+//        }
+//    }
+
+    @PostMapping(value = "/createCategory", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> saveCategory(
+            @RequestPart("category")
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Dữ liệu danh mục (JSON)",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class))
+            ) String categoryJson,
+
+            @RequestPart(value = "file", required = false)
+            @Parameter(
+                    description = "Hình ảnh danh mục (File ảnh)",
+                    content = @Content(mediaType = "multipart/form-data")
+            ) MultipartFile file) throws IOException {
+
         try {
+            // Chuyển đổi JSON từ String thành đối tượng Category
+            Category category = objectMapper.readValue(categoryJson, Category.class);
+
             // Xử lý tên ảnh (nếu không có, dùng mặc định)
             String imageName = (file != null && !file.isEmpty()) ? file.getOriginalFilename() : "default.jpg";
             category.setImageName(imageName);
@@ -276,8 +328,7 @@ public class StaffController {
                 // Lưu file ảnh nếu có
                 if (file != null && !file.isEmpty()) {
                     File saveFile = new ClassPathResource("static/img/").getFile();
-                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "category_img" + File.separator
-                            + file.getOriginalFilename());
+                    Path path = Path.of(saveFile.getAbsolutePath(), "category_img", file.getOriginalFilename());
                     Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 }
                 return ResponseEntity.ok(Collections.singletonMap("message", "Category saved successfully"));
@@ -287,9 +338,11 @@ public class StaffController {
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Collections.singletonMap("error", e.getMessage()));
+                    .body(Collections.singletonMap("error", "Failed to parse JSON: " + e.getMessage()));
         }
     }
+
+
 
     //API lấy tất cả category
     @Operation(summary = "Api hiển thị tất cả danh mục ")
